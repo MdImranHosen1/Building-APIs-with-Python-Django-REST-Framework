@@ -1,7 +1,7 @@
 from rest_framework import status
 from django.shortcuts import redirect
 # from django.http import JsonResponse
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 # from snippets.models import Snippet
 # from snippets.serializers import SnippetSerializer
@@ -9,6 +9,7 @@ from .models import Advocate,Company
 from .serializers import AdvocateSerializer,CompanySerializer
 from django.db.models import Q
 from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
 
 @api_view(['GET'])
 def endpoints(request):
@@ -16,6 +17,7 @@ def endpoints(request):
     return Response(data)
 
 @api_view(['GET','POST'])
+@permission_classes([IsAuthenticated])
 def advocates_list(request):
     
     if request.method=='GET':
